@@ -18,7 +18,7 @@ const HtmlElementsPlugin = require('./html-elements-plugin');
  * Webpack Constants
  */
 const METADATA = {
-  title: 'Angular2 Webpack Starter by @gdi2290 from @AngularClass',
+  title: 'Emoji Search',
   baseUrl: '/',
   isDevServer: helpers.isWebpackDevServer()
 };
@@ -171,6 +171,12 @@ module.exports = {
       {
         test: /\.(jpg|png|gif)$/,
         loader: 'file'
+      },
+
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        loaders: ['raw-loader', 'sass-loader'] // sass-loader not scss-loader
       }
     ]
 

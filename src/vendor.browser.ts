@@ -21,6 +21,10 @@ import '@angularclass/hmr';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
+
+const Clipboard = require('clipboard');
+new Clipboard('.js-copy-to-clipboard');
+
 if ('production' === ENV) {
   // Production
 

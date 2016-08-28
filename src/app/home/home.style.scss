@@ -1,0 +1,54 @@
+.emoji-search {
+  font-family: 'Inconsolata', monospace;
+  &__field {
+    // override default input styles
+    background-color: transparent;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+
+    // makes field fluid and expanded
+    display: inline-block;
+    width: 100%;
+
+    // styling
+    font-family: inherit;
+    font-size: 48px;
+    color: #999;
+
+    &:focus {
+      color: #333;
+    }
+  }
+
+  &__results {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  &__result-item {
+    // override default button style
+    background: transparent;
+    border: 0;
+
+    // styling
+    font-size: 100px;
+
+
+  }
+
+  &__clipboard-message {
+    color: #ccc;
+    font-size: 20px;
+  }
+}
+
+.o-container {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}

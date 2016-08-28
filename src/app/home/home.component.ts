@@ -1,47 +1,40 @@
 import { Component } from '@angular/core';
+import { EmojiService } from './emoji.service';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+// Statics
 
-import { AppState } from '../app.service';
-import { Title } from './title';
-import { XLarge } from './x-large';
+import 'rxjs/add/observable/throw';
+
+// Operators
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/toPromise';
+
 
 @Component({
-  // The selector is what angular internally uses
-  // for `document.querySelectorAll(selector)` in our index.html
-  // where, in this case, selector is the string 'home'
-  selector: 'home',  // <home></home>
-  // We need to tell Angular's Dependency Injection which providers are in our app.
-  providers: [
-    Title
-  ],
-  // We need to tell Angular's compiler which directives are in our template.
-  // Doing so will allow Angular to attach our behavior to an element
-  directives: [
-    XLarge
-  ],
-  // We need to tell Angular's compiler which custom pipes are in our template.
-  pipes: [ ],
-  // Our list of styles in our component. We may add more to compose many styles together
-  styleUrls: [ './home.style.css' ],
-  // Every Angular template is first compiled by the browser before Angular runs it's compiler
-  templateUrl: './home.template.html'
+  selector: 'home',
+  templateUrl: 'home.template.html',
+  styleUrls: ['./home.style.scss'],
+  providers: [EmojiService]
 })
 export class Home {
-  // Set our default values
-  localState = { value: '' };
-  // TypeScript public modifiers
-  constructor(public appState: AppState, public title: Title) {
+  term = new FormControl();
+  emojis: Observable<Array<string>>;
+  selectedEmoji: string;
 
+  constructor(private emojiService: EmojiService ) {
+
+    this.emojis = this.term.valueChanges
+      .debounceTime(400)
+      .distinctUntilChanged()
+      .switchMap(term => this.emojiService.search(term))
+      ;
   }
 
-  ngOnInit() {
-    console.log('hello `Home` component');
-    // this.title.getData().subscribe(data => this.data = data);
+  selectEmoji(emoji) {
+    this.selectedEmoji = emoji;
   }
-
-  submitState(value) {
-    console.log('submitState', value);
-    this.appState.set('value', value);
-    this.localState.value = '';
-  }
-
 }

@@ -1,41 +1,16 @@
-<div class="card-container">
-  <h1 x-large class="sample-content">Your Content Here</h1>
-
-  <div>
-    For material design components use the <a href="https://github.com/AngularClass/angular2-webpack-starter/tree/material2"><b>material2</b></a> branch
-  </div>
-
-  <hr>
-
-  <div>
-    For hot module reloading run
-    <pre>npm run start:hmr</pre>
-  </div>
-
-  <hr>
-
-  <div>
-    <h4>Local State</h4>
-
-    <form (ngSubmit)="submitState(localState.value)" autocomplete="off">
-
-      <input
-        [value]="localState.value"
-        (input)="localState.value = $event.target.value"
-        placeholder="Submit Local State to App State"
-        autofocus>
-
-      <button md-raised-button color="primary">Submit Value</button>
-    </form>
-    <!--
-        <input type="text" [value]="localState.value" (input)="localState.value = $event.target.value" autofocus>
-        Rather than wiring up two-way data-binding ourselves with [value] and (input)
-        we can use Angular's [(ngModel)] syntax
-        <input type="text" name="textInput" [(ngModel)]="localState.value" autofocus>
-      -->
-
-    <pre>this.localState = {{ localState | json }}</pre>
-
-  </div>
-
-</div>
+<section class="emoji-search o-container" >
+  <form>
+    <input type="search" name="query" placeholder="type to search for emojis" class="emoji-search__field" [formControl]="term" />
+  </form>
+  <ul class="emoji-search__results">
+    <li *ngFor="let emoji of emojis | async">
+      <button class="emoji-search__result-item js-copy-to-clipboard"
+              [attr.data-clipboard-text]="emoji"
+              (click)="selectEmoji(emoji)">
+        {{emoji}}
+      </button>
+    </li>
+  </ul>
+  <p *ngIf="selectedEmoji"
+     class="emoji-search__clipboard-message">Copied {{selectedEmoji}} to clipboard</p>
+</section>
